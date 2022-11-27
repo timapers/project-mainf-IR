@@ -3,8 +3,10 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from nltk.corpus import stopwords
 
+vectorizer = TfidfVectorizer(stop_words=stopwords.words('english'))
+
 def to_documents():
-    directory = '../data'
+    directory = '../data/documents'
     documents = []
     for filename in os.listdir(directory):
         f = os.path.join(directory, filename)
@@ -12,17 +14,12 @@ def to_documents():
             file = open(f, 'r')
             lines = file.readlines()
             for line in lines:
-                print(line)
                 documents.append(line)
             file.close()
-    print(documents)
+    return documents
 
-#https://towardsdatascience.com/natural-language-processing-feature-engineering-using-tf-idf-e8b9d00e7e76
-def tfIdf(documents):
-    vectorizer = TfidfVectorizer(stop_words=stopwords.words('english'))
-    vectors = vectorizer.fit_transform(documents)
-    feature_names = vectorizer.get_feature_names()
-    dense = vectors.todense()
-    denselist = dense.tolist()
-    df = pd.DataFrame(denselist, columns=feature_names)
-    print(df)
+
+def tf_idf(documents):
+    # https://towardsdatascience.com/natural-language-processing-feature-engineering-using-tf-idf-e8b9d00e7e76
+    return vectorizer.fit_transform(documents)
+
