@@ -2,7 +2,7 @@ import pandas as pd
 import requests
 import os
 
-KEY = "AIzaSyCxt5vTYJWr0k9FSl4tDH7ejCeqxK88qJM"
+KEY = "AIzaSyDigVwZ9B8WqqGdvyy19tw7_zsXgUMFwSc"
 session = requests.session()
 
 
@@ -73,10 +73,7 @@ def generate_documents():
         category_id = int(video["category_id"])
         if categories.count(category_id) > 3: continue
         categories.append(category_id)
-
-        # Generate a document for this video
         video_id = video["id"]
-        document = open('../data/documents/{}.txt'.format(video_id), 'a')
 
         # Fetch comment thread of this video
         res = session.get("https://www.googleapis.com/youtube/v3/commentThreads", params={
@@ -87,16 +84,19 @@ def generate_documents():
             "order": "relevance",
            "key": "AIzaSyBRDRhcwwVsz9DNIudB5Z5knD1UMrNdbI0"
         }).json()
+        if "items" not in res: continue
+
+        # Generate a document for this video
+        print("Writing all comments from video {} to document {}.txt ...".format(video_id, video_id))
+        document = open('../data/documents/{}.txt'.format(video_id), 'a')
 
         # Iterate over all comments and put them in the document
-        if "items" not in res: continue
         for comment in res["items"]:
            comment = comment["snippet"]["topLevelComment"]["snippet"]
-           document.write(comment["textOriginal"])
+           document.write(comment["textOriginal"].replace("\n", ""))
 
         # Close the document
         document.close()
-        exit(0)
 
     # Success
     return True
