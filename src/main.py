@@ -1,9 +1,12 @@
+from generation import *
+
+
 def main():
 
-    query = ""
-    videos = None
-
-    return 0
+    # Data generation
+    # generate_categories()
+    # generate_videos()
+    generate_documents()
 
 
 if __name__ == "__main__":
