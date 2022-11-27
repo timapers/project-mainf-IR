@@ -1,8 +1,11 @@
 from generation import *
 from vectorization import *
+from interpretation import *
 
 
 def main():
+
+    query = "life learning"
 
     # Data generation
     # generate_categories()
@@ -14,7 +17,8 @@ def main():
     vectors = tf_idf(documents)
 
     # Interpretation
-
+    similarities = get_tf_idf_query_similarity(vectorizer, vectors, query)
+    print(similarities)
 
     return 0
 

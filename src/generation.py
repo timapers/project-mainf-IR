@@ -2,7 +2,7 @@ import pandas as pd
 import requests
 import os
 
-KEY = "AIzaSyDigVwZ9B8WqqGdvyy19tw7_zsXgUMFwSc"
+KEY = "AIzaSyBRDRhcwwVsz9DNIudB5Z5knD1UMrNdbI0"
 session = requests.session()
 
 
@@ -77,12 +77,12 @@ def generate_documents():
 
         # Fetch comment thread of this video
         res = session.get("https://www.googleapis.com/youtube/v3/commentThreads", params={
-           "part": "snippet",
-           "videoId": video_id,
-           "maxResults": 100,
-           "textFormat": "plainText",
+            "part": "snippet",
+            "videoId": video_id,
+            "maxResults": 100,
+            "textFormat": "plainText",
             "order": "relevance",
-           "key": "AIzaSyBRDRhcwwVsz9DNIudB5Z5knD1UMrNdbI0"
+            "key": KEY
         }).json()
         if "items" not in res: continue
 

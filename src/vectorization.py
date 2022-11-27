@@ -5,6 +5,7 @@ from nltk.corpus import stopwords
 
 vectorizer = TfidfVectorizer(stop_words=stopwords.words('english'))
 
+
 def to_documents():
     directory = '../data/documents'
     documents = []
