@@ -50,12 +50,14 @@ def generate_videos():
         }).json()
         for video in res["items"]:
             video_id = video["id"]["videoId"]
+            print("https://www.youtube.com/watch?v=".format(video_id))
+            exit(0)
             channel_id = video["snippet"]["channelId"]
             published_at = video["snippet"]["publishedAt"]
             title = video["snippet"]["title"]
             description = video["snippet"]["description"]
             print("Inserting video {} to documents.csv ...".format(video_id))
-            # videos.write('{},{},{},{},"{}","{}"\n'.format(video_id, category_id, channel_id, published_at, title, description))
+            videos.write('{},{},{},{},"{}","{}"\n'.format(video_id, category_id, channel_id, published_at, title, description))
 
     # Success
     return True
