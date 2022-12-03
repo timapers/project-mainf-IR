@@ -1,3 +1,5 @@
+import csv
+
 import pandas as pd
 import requests
 import os
@@ -41,8 +43,8 @@ def generate_videos():
         category_id = int(category["id"])
         res = session.get("https://www.googleapis.com/youtube/v3/search", params={
             "part": "snippet",
-            "maxResults": 1,
-            "order": "viewCount",
+            "maxResults": 50,
+            "order": "relevance",
             "relevanceLanguage": "en",
             "videoCategoryId": category_id,
             "type": "video",
@@ -50,32 +52,27 @@ def generate_videos():
         }).json()
         for video in res["items"]:
             video_id = video["id"]["videoId"]
-            print("https://www.youtube.com/watch?v=".format(video_id))
-            exit(0)
             channel_id = video["snippet"]["channelId"]
             published_at = video["snippet"]["publishedAt"]
-            title = video["snippet"]["title"]
-            description = video["snippet"]["description"]
             print("Inserting video {} to documents.csv ...".format(video_id))
-            videos.write('{},{},{},{},"{}","{}"\n'.format(video_id, category_id, channel_id, published_at, title, description))
+            videos.write('{},{},{},{}\n'.format(video_id, category_id, channel_id, published_at))
 
     # Success
     return True
 
 
-def generate_documents():
-    """ Generate documents e.g. fetch commentthreads from a video and save it as a document. """
+def generate_comments():
+    """ Generate comments e.g. fetch commentthreads from a video and save it in comments.csv. """
 
     # Define documents csv file
-    videos = pd.read_csv("../data/videos.csv", on_bad_lines='skip')
+    videos = pd.read_csv("../data/videos.csv")
+    file = open('../data/comments.csv', 'w')
+    comments = csv.writer(file)
+    comments.writerow(["video_id","index","content"])
 
     # Itterate through documents
-    categories = []
     for index, video in videos.iterrows():
 
-        category_id = int(video["category_id"])
-        if categories.count(category_id) > 3: continue
-        categories.append(category_id)
         video_id = video["id"]
 
         # Fetch comment thread of this video
@@ -91,15 +88,14 @@ def generate_documents():
 
         # Generate a document for this video
         print("Writing all comments from video {} to document {}.txt ...".format(video_id, video_id))
-        document = open('../data/documents/{}.txt'.format(video_id), 'a')
 
         # Iterate over all comments and put them in the document
-        for comment in res["items"]:
-           comment = comment["snippet"]["topLevelComment"]["snippet"]
-           document.write(comment["textOriginal"].replace("\n", ""))
+        for index, comment in enumerate(res["items"]):
+           content = comment["snippet"]["topLevelComment"]["snippet"]["textOriginal"]
+           comments.writerow([video_id, index, str(content)])
 
-        # Close the document
-        document.close()
+    # Close the document
+    file.close()
 
     # Success
     return True
