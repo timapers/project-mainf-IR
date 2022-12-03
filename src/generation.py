@@ -2,7 +2,7 @@ import pandas as pd
 import requests
 import os
 
-KEY = "AIzaSyBRDRhcwwVsz9DNIudB5Z5knD1UMrNdbI0"
+KEY = "AIzaSyDn3bGDD-JzznJg6MQ7WtQ1vFHJR5mZqPM"
 session = requests.session()
 
 
@@ -41,7 +41,8 @@ def generate_videos():
         category_id = int(category["id"])
         res = session.get("https://www.googleapis.com/youtube/v3/search", params={
             "part": "snippet",
-            "maxResults": 50,
+            "maxResults": 1,
+            "order": "viewCount",
             "relevanceLanguage": "en",
             "videoCategoryId": category_id,
             "type": "video",
@@ -54,7 +55,7 @@ def generate_videos():
             title = video["snippet"]["title"]
             description = video["snippet"]["description"]
             print("Inserting video {} to documents.csv ...".format(video_id))
-            videos.write('{},{},{},{},"{}","{}"\n'.format(video_id, category_id, channel_id, published_at, title, description))
+            # videos.write('{},{},{},{},"{}","{}"\n'.format(video_id, category_id, channel_id, published_at, title, description))
 
     # Success
     return True

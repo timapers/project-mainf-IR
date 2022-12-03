@@ -1,6 +1,6 @@
 from generation import *
-from vectorization import *
-from interpretation import *
+# rom vectorization import *
+# from interpretation import *
 
 
 def main():
@@ -9,16 +9,16 @@ def main():
 
     # Data generation
     # generate_categories()
-    # generate_videos()
+    generate_videos()
     # generate_documents()
 
     # Vectorization
-    documents = to_documents()
-    vectors = tf_idf(documents)
+    # documents = to_documents()
+    # vectors = tf_idf(documents)
 
     # Interpretation
-    similarities = get_tf_idf_query_similarity(vectorizer, vectors, query)
-    print(similarities)
+    # similarities = get_tf_idf_query_similarity(vectorizer, vectors, query)
+    # print(similarities)
 
     return 0
 
