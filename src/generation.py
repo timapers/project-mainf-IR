@@ -2,6 +2,7 @@ import csv
 
 import pandas as pd
 import requests
+import langdetect
 import os
 
 KEY = "AIzaSyDn3bGDD-JzznJg6MQ7WtQ1vFHJR5mZqPM"
@@ -92,7 +93,8 @@ def generate_comments():
         # Iterate over all comments and put them in the document
         for index, comment in enumerate(res["items"]):
            content = comment["snippet"]["topLevelComment"]["snippet"]["textOriginal"]
-           comments.writerow([video_id, index, str(content)])
+           if len(content.split()) > 5 and langdetect.detect(content) == "en":
+               comments.writerow([video_id, index, str(content)])
 
     # Close the document
     file.close()
