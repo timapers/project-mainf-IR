@@ -3,7 +3,6 @@ import csv
 import pandas as pd
 import requests
 import langdetect
-import os
 
 KEY = "AIzaSyDn3bGDD-JzznJg6MQ7WtQ1vFHJR5mZqPM"
 session = requests.session()

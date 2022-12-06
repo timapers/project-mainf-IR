@@ -1,16 +1,16 @@
-from generation import *
+from data import *
 # rom vectorization import *
 # from interpretation import *
 
 
 def main():
 
-    query = "life learning"
+    query = "life learning you big piece of lovely flowers"
 
     # Data generation
     # generate_categories()
     # generate_videos()
-    generate_comments()
+    # generate_comments()
 
     # Vectorization
     # documents = to_documents()
