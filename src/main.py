@@ -9,8 +9,7 @@ def main():
 
     # Data generation
     # generate_categories()
-    # generate_videos()
-    # generate_comments()
+    generate_data()
 
     # Vectorization
     # documents = to_documents()
