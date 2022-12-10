@@ -5,7 +5,7 @@ import requests
 import langdetect
 import string
 
-KEY = ""
+KEY = "AIzaSyDTCXpUDRqaJiojsSsFoYWw8WwGjDhuQYs"
 session = requests.session()
 # Constants
 NR_OF_VIDEOS = 50
@@ -73,6 +73,9 @@ def generate_data():
             }).json()
 
             # loop over the retrieved videos
+            if not res["items"]:
+                print("NO VIDEOS")
+                continue
             for video in res["items"]:
                 video_id = video["id"]["videoId"]
                 channel_id = video["snippet"]["channelId"]
