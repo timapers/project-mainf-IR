@@ -9,6 +9,7 @@ def main():
 
     # Data generation
     # generate_categories()
+    # initialize_files()
     generate_data()
 
     # Vectorization
