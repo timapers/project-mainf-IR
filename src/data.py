@@ -5,12 +5,12 @@ import requests
 import langdetect
 import string
 
-KEY = "AIzaSyDTCXpUDRqaJiojsSsFoYWw8WwGjDhuQYs"
+KEY = "AIzaSyAYafi968hIvH33mgtHGG26_GlLymPwDnA"
 session = requests.session()
 # Constants
 NR_OF_VIDEOS = 50
 MAX_NR_OF_COMMENTS = 100
-MIN_NR_OF_COMMENTS = 90
+MIN_NR_OF_COMMENTS = 50
 
 
 def generate_categories():
@@ -84,8 +84,11 @@ def generate_data():
                 if title not in received_titles:
                     received_titles.append(title)
                     q = title_to_query(title, q)
-
-                    if langdetect.detect(title) == "en":
+                    try:
+                        language = langdetect.detect(str(title))
+                    except:
+                        continue
+                    if language == "en":
                         # Fetch comment thread of this video
                         res2 = session.get("https://www.googleapis.com/youtube/v3/commentThreads", params={
                             "part": "id,snippet",
