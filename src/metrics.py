@@ -2,6 +2,7 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pylab as plt
 import pandas as pd
+from sklearn.metrics import classification_report
 
 category = {
     1: 0,
@@ -25,7 +26,7 @@ category = {
 
 confusion_labels = list(category.keys())
 
-data = [[252, 51, 0, 0, 26, 39, 137, 14, 33, 33], [21, 950, 0, 0, 38, 31, 145, 30, 56, 34], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [41, 119, 0, 0, 436, 68, 276, 89, 216, 98], [45, 131, 0, 0, 83, 405, 321, 106, 101, 69], [121, 290, 0, 0, 98, 133, 1258, 147, 190, 139], [21, 51, 0, 0, 34, 43, 170, 504, 23, 52], [16, 89, 0, 0, 83, 34, 176, 13, 945, 60], [24, 44, 0, 0, 38, 37, 82, 25, 48, 518]]
+data = [[193, 25, 5, 18, 32, 166, 9, 28, 6, 30], [11, 815, 9, 26, 48, 163, 29, 46, 10, 23], [5, 10, 234, 11, 16, 47, 25, 13, 2, 21], [39, 88, 30, 401, 76, 236, 60, 191, 32, 84], [37, 74, 13, 58, 400, 282, 70, 102, 29, 49], [95, 189, 30, 67, 179, 1215, 168, 162, 38, 112], [9, 47, 29, 21, 36, 123, 437, 23, 27, 35], [12, 54, 7, 56, 50, 166, 10, 881, 15, 48], [15, 14, 2, 22, 26, 52, 32, 21, 209, 84], [10, 19, 8, 21, 20, 98, 26, 46, 39, 468]]
 ax = sns.heatmap(data, linewidth=0.5, annot=True, fmt='')
 ax.set_title('Confusion Matrix')
 ax.set_xlabel("Target")
@@ -33,4 +34,17 @@ ax.set_ylabel("Prediction")
 ax.set_xticklabels(confusion_labels)
 ax.set_yticklabels(confusion_labels)
 plt.savefig('../results/confusion_matrix.png')
+
+y = []
+y_pred = []
+for i in range(len(data)):
+    for j in range(len(data[i])):
+        count = data[i][j]
+        for k in range(count):
+            y.append(i)
+            y_pred.append(j)
+
+confusion_labels =  ["Film & Animation", "Music", "Sports", "People & Blogs", "Comedy", "Entertainment", "News & Politics", "How-to & Style", "Education", "Science & Technology"]
+
+print(classification_report(y, y_pred, target_names=confusion_labels))
 
