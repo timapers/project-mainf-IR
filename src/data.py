@@ -10,7 +10,7 @@ session = requests.session()
 # Constants
 NR_OF_VIDEOS = 50
 MAX_NR_OF_COMMENTS = 100
-MIN_NR_OF_COMMENTS = 50
+MIN_NR_OF_COMMENTS = 90
 
 
 def generate_categories():
