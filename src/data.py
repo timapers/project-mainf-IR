@@ -5,7 +5,7 @@ import requests
 import langdetect
 import string
 
-KEY = "AIzaSyAYafi968hIvH33mgtHGG26_GlLymPwDnA"
+KEY = "YTB_DATA_API_KEY"
 session = requests.session()
 # Constants
 NR_OF_VIDEOS = 50
